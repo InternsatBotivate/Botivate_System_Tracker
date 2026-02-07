@@ -118,6 +118,40 @@ const Stage9GoLive = () => {
                                 </>
                             );
                         }}
+                        renderCard={(item) => {
+                            const s8 = getStage8Data(item);
+                            return (
+                                <div className="flex flex-col gap-3">
+                                    <div className="flex justify-between items-start">
+                                        <div>
+                                            <span className="text-xs font-bold text-sky-600 bg-sky-50 px-2 py-0.5 rounded border border-sky-100">{item.serialNo}</span>
+                                            <h4 className="font-bold text-slate-800 mt-1">{item.systemName}</h4>
+                                        </div>
+                                        <button
+                                            onClick={() => handleActionClick(item)}
+                                            className="px-3 py-1.5 bg-sky-500 text-white text-xs font-medium rounded hover:bg-sky-600 shadow-sm transition-colors flex items-center gap-1"
+                                        >
+                                            Action <ArrowRight size={12} />
+                                        </button>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-2 text-sm">
+                                        <div className="bg-slate-50 p-2 rounded">
+                                            <span className="block text-xs text-slate-400">Readiness</span>
+                                            <span className={`font-medium ${s8.userReadiness === 'Ready' ? 'text-emerald-700' : 'text-amber-700'}`}>{s8.userReadiness}</span>
+                                        </div>
+                                        <div className="bg-slate-50 p-2 rounded">
+                                            <span className="block text-xs text-slate-400">Feedback</span>
+                                            <span className="font-medium text-slate-700 truncate">{s8.trainingFeedback}</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex justify-between items-center pt-2 border-t border-slate-100">
+                                        <span className="text-xs text-slate-500">Delay: {calculateDelay(item.requirementDate)} days</span>
+                                    </div>
+                                </div>
+                            );
+                        }}
                     />
                 </div>
             ) : (
@@ -139,6 +173,49 @@ const Stage9GoLive = () => {
                                     <td className="px-4 py-3 text-xs text-slate-500 max-w-xs">{s9.initialSupportNotes}</td>
                                     <td className="px-4 py-3 text-xs text-slate-500">{calculateDelay(item.requirementDate)} days</td>
                                 </>
+                            );
+                        }}
+                        renderCard={(item) => {
+                            const s9 = getStage9Data(item);
+                            return (
+                                <div className="flex flex-col gap-3">
+                                    <div className="flex justify-between items-start">
+                                        <div>
+                                            <span className="text-xs font-bold text-sky-600 bg-sky-50 px-2 py-0.5 rounded border border-sky-100">{item.serialNo}</span>
+                                            <h4 className="font-bold text-slate-800 mt-1">{item.systemName}</h4>
+                                        </div>
+                                        <span className="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                                            {s9.postGoLiveStatus}
+                                        </span>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-2 text-sm">
+                                        <div className="bg-slate-50 p-2 rounded">
+                                            <span className="block text-xs text-slate-400">Done By</span>
+                                            <span className="font-medium text-slate-700">{s9.goLiveDoneBy}</span>
+                                        </div>
+                                        <div className="bg-slate-50 p-2 rounded">
+                                            <span className="block text-xs text-slate-400">Type</span>
+                                            <span className="font-medium text-slate-700">{s9.deploymentType}</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-2 text-sm">
+                                        <div className="bg-slate-50 p-2 rounded">
+                                            <span className="block text-xs text-slate-400">Date</span>
+                                            <span className="font-medium text-slate-700">{s9.goLiveDate}</span>
+                                        </div>
+                                        <div className="bg-slate-50 p-2 rounded">
+                                            <span className="block text-xs text-slate-400">Support Notes</span>
+                                            <span className="font-medium text-slate-700 truncate">{s9.initialSupportNotes}</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex justify-between items-center pt-2 border-t border-slate-100">
+                                        <span className="text-xs text-slate-500">Delay: {calculateDelay(item.requirementDate)} days</span>
+                                        <span className="text-xs text-slate-400">{item.processSystem}</span>
+                                    </div>
+                                </div>
                             );
                         }}
                     />

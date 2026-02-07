@@ -113,6 +113,40 @@ const Stage11MISIntegration = () => {
                                 </>
                             );
                         }}
+                        renderCard={(item) => {
+                            const s10 = getStage10Data(item);
+                            return (
+                                <div className="flex flex-col gap-3">
+                                    <div className="flex justify-between items-start">
+                                        <div>
+                                            <span className="text-xs font-bold text-sky-600 bg-sky-50 px-2 py-0.5 rounded border border-sky-100">{item.serialNo}</span>
+                                            <h4 className="font-bold text-slate-800 mt-1">{item.systemName}</h4>
+                                        </div>
+                                        <button
+                                            onClick={() => handleActionClick(item)}
+                                            className="px-3 py-1.5 bg-sky-500 text-white text-xs font-medium rounded hover:bg-sky-600 shadow-sm transition-colors flex items-center gap-1"
+                                        >
+                                            Action <ArrowRight size={12} />
+                                        </button>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-2 text-sm">
+                                        <div className="bg-slate-50 p-2 rounded">
+                                            <span className="block text-xs text-slate-400">Category</span>
+                                            <span className="font-medium text-slate-700">{s10.systemCategory}</span>
+                                        </div>
+                                        <div className="bg-slate-50 p-2 rounded">
+                                            <span className="block text-xs text-slate-400">Ref Code</span>
+                                            <span className="font-medium text-slate-700 font-mono text-xs">{s10.indexReferenceCode}</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex justify-between items-center pt-2 border-t border-slate-100">
+                                        <span className="text-xs text-slate-500">Delay: {calculateDelay(item.requirementDate)} days</span>
+                                    </div>
+                                </div>
+                            );
+                        }}
                     />
                 </div>
             ) : (
@@ -141,6 +175,48 @@ const Stage11MISIntegration = () => {
                                     <td className="px-4 py-3 text-xs text-slate-500 max-w-xs">{s11.integrationRemarks}</td>
                                     <td className="px-4 py-3 text-xs text-slate-500">{calculateDelay(item.requirementDate)} days</td>
                                 </>
+                            );
+                        }}
+                        renderCard={(item) => {
+                            const s11 = getStage11Data(item);
+                            return (
+                                <div className="flex flex-col gap-3">
+                                    <div className="flex justify-between items-start">
+                                        <div>
+                                            <span className="text-xs font-bold text-sky-600 bg-sky-50 px-2 py-0.5 rounded border border-sky-100">{item.serialNo}</span>
+                                            <h4 className="font-bold text-slate-800 mt-1">{item.systemName}</h4>
+                                        </div>
+                                        <span className={`px-2 py-0.5 rounded text-xs font-bold border ${s11.integrationStatus === 'Completed'
+                                            ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                            : 'bg-amber-50 text-amber-700 border-amber-200'
+                                            }`}>
+                                            {s11.integrationStatus}
+                                        </span>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-2 text-sm">
+                                        <div className="bg-slate-50 p-2 rounded">
+                                            <span className="block text-xs text-slate-400">Module</span>
+                                            <span className="font-medium text-slate-700">{s11.misModuleName}</span>
+                                        </div>
+                                        <div className="bg-slate-50 p-2 rounded">
+                                            <span className="block text-xs text-slate-400">Ref ID</span>
+                                            <span className="font-medium text-slate-700 font-mono text-xs">{s11.misReferenceId}</span>
+                                        </div>
+                                    </div>
+
+                                    {s11.integrationRemarks && (
+                                        <div className="text-sm text-slate-600 bg-slate-50 p-2 rounded border border-slate-100">
+                                            <span className="block text-xs text-slate-400 mb-1">Remarks</span>
+                                            {s11.integrationRemarks}
+                                        </div>
+                                    )}
+
+                                    <div className="flex justify-between items-center pt-2 border-t border-slate-100">
+                                        <span className="text-xs text-slate-500">Delay: {calculateDelay(item.requirementDate)} days</span>
+                                        <span className="text-xs text-slate-400">{item.processSystem}</span>
+                                    </div>
+                                </div>
                             );
                         }}
                     />

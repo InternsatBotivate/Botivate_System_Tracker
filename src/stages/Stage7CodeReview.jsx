@@ -112,6 +112,41 @@ const Stage7CodeReview = () => {
                                 </>
                             );
                         }}
+                        renderCard={(item) => {
+                            const s6 = getStage6Data(item);
+                            return (
+                                <div className="flex flex-col gap-3">
+                                    <div className="flex justify-between items-start">
+                                        <div>
+                                            <span className="text-xs font-bold text-sky-600 bg-sky-50 px-2 py-0.5 rounded border border-sky-100">{item.serialNo}</span>
+                                            <h4 className="font-bold text-slate-800 mt-1">{item.systemName}</h4>
+                                        </div>
+                                        <button
+                                            onClick={() => handleActionClick(item)}
+                                            className="px-3 py-1.5 bg-sky-500 text-white text-xs font-medium rounded hover:bg-sky-600 shadow-sm transition-colors flex items-center gap-1"
+                                        >
+                                            Action <ArrowRight size={12} />
+                                        </button>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-2 text-sm">
+                                        <div className="bg-slate-50 p-2 rounded">
+                                            <span className="block text-xs text-slate-400">Tested By</span>
+                                            <span className="font-medium text-slate-700">{s6.testedBy}</span>
+                                        </div>
+                                        <div className="bg-slate-50 p-2 rounded">
+                                            <span className="block text-xs text-slate-400">Result</span>
+                                            <span className="font-medium text-slate-700">{s6.testingResult}</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex justify-between items-center pt-2 border-t border-slate-100">
+                                        <span className="text-xs text-slate-500">Delay: {calculateDelay(item.requirementDate)} days</span>
+                                        <span className="text-xs text-red-600 font-medium">{s6.bugCount} Bugs</span>
+                                    </div>
+                                </div>
+                            );
+                        }}
                     />
                 </div>
             ) : (
@@ -141,6 +176,49 @@ const Stage7CodeReview = () => {
                                     <td className="px-4 py-3 text-xs text-slate-500">{s7.reviewRemarks}</td>
                                     <td className="px-4 py-3 text-xs text-slate-500">{calculateDelay(item.requirementDate)} days</td>
                                 </>
+                            );
+                        }}
+                        renderCard={(item) => {
+                            const s7 = getStage7Data(item);
+                            return (
+                                <div className="flex flex-col gap-3">
+                                    <div className="flex justify-between items-start">
+                                        <div>
+                                            <span className="text-xs font-bold text-sky-600 bg-sky-50 px-2 py-0.5 rounded border border-sky-100">{item.serialNo}</span>
+                                            <h4 className="font-bold text-slate-800 mt-1">{item.systemName}</h4>
+                                        </div>
+                                        <span className={`px-2 py-0.5 rounded text-xs font-medium border ${s7.codeQualityRating === 'Excellent' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
+                                            s7.codeQualityRating === 'Good' ? 'bg-sky-50 text-sky-700 border-sky-200' :
+                                                s7.codeQualityRating === 'Average' ? 'bg-amber-50 text-amber-700 border-amber-200' :
+                                                    'bg-red-50 text-red-700 border-red-200'
+                                            }`}>
+                                            {s7.codeQualityRating}
+                                        </span>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-2 text-sm">
+                                        <div className="bg-slate-50 p-2 rounded">
+                                            <span className="block text-xs text-slate-400">Reviewed By</span>
+                                            <span className="font-medium text-slate-700">{s7.reviewedBy}</span>
+                                        </div>
+                                        <div className="bg-slate-50 p-2 rounded">
+                                            <span className="block text-xs text-slate-400">Security</span>
+                                            <span className="font-medium text-slate-700">{s7.securityCheck}</span>
+                                        </div>
+                                    </div>
+
+                                    {(s7.reviewRemarks || s7.performanceNotes) && (
+                                        <div className="text-sm text-slate-600 bg-slate-50 p-2 rounded border border-slate-100">
+                                            {s7.performanceNotes && <div className="mb-1"><span className="text-xs text-slate-400">Performance: </span>{s7.performanceNotes}</div>}
+                                            {s7.reviewRemarks && <div><span className="text-xs text-slate-400">Remarks: </span>{s7.reviewRemarks}</div>}
+                                        </div>
+                                    )}
+
+                                    <div className="flex justify-between items-center pt-2 border-t border-slate-100">
+                                        <span className="text-xs text-slate-500">Delay: {calculateDelay(item.requirementDate)} days</span>
+                                        <span className="text-xs text-slate-400">{item.processSystem}</span>
+                                    </div>
+                                </div>
                             );
                         }}
                     />

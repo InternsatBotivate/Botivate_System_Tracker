@@ -94,6 +94,44 @@ const Stage1RequirementUpdate = () => {
                         <td className="px-4 py-3 text-slate-500 text-xs">{calculateDelay(item.requirementDate)} days</td>
                     </>
                 )}
+                renderCard={(item) => (
+                    <div className="flex flex-col gap-3">
+                        <div className="flex justify-between items-start">
+                            <div>
+                                <span className="text-xs font-bold text-sky-600 bg-sky-50 px-2 py-0.5 rounded border border-sky-100">{item.serialNo}</span>
+                                <h4 className="font-bold text-slate-800 mt-1">{item.systemName}</h4>
+                            </div>
+                            <span className="text-xs text-slate-400">{item.requirementDate}</span>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-2 text-sm">
+                            <div className="bg-slate-50 p-2 rounded">
+                                <span className="block text-xs text-slate-400">Process</span>
+                                <span className="font-medium text-slate-700">{item.processSystem}</span>
+                            </div>
+                            <div className="bg-slate-50 p-2 rounded">
+                                <span className="block text-xs text-slate-400">Posted By</span>
+                                <span className="font-medium text-slate-700">{item.history[STAGES.REQUIREMENT_UPDATE]?.postedBy}</span>
+                            </div>
+                        </div>
+
+                        {item.reason && (
+                            <div className="text-sm text-slate-600 bg-slate-50 p-2 rounded border border-slate-100">
+                                <span className="block text-xs text-slate-400 mb-1">Reason</span>
+                                {item.reason}
+                            </div>
+                        )}
+
+                        <div className="flex justify-between items-center pt-2 border-t border-slate-100">
+                            <span className="text-xs text-slate-500">Delay: {calculateDelay(item.requirementDate)} days</span>
+                            {item.anyLink && (
+                                <a href={item.anyLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-sm text-sky-600 hover:text-sky-700">
+                                    <LinkIcon size={14} /> Link
+                                </a>
+                            )}
+                        </div>
+                    </div>
+                )}
             />
 
             {/* Add Requirement Modal */}

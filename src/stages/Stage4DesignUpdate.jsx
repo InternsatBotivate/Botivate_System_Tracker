@@ -104,6 +104,41 @@ const Stage4DesignUpdate = () => {
                                 </>
                             );
                         }}
+                        renderCard={(item) => {
+                            const s3 = getStage3Data(item);
+                            return (
+                                <div className="flex flex-col gap-3">
+                                    <div className="flex justify-between items-start">
+                                        <div>
+                                            <span className="text-xs font-bold text-sky-600 bg-sky-50 px-2 py-0.5 rounded border border-sky-100">{item.serialNo}</span>
+                                            <h4 className="font-bold text-slate-800 mt-1">{item.systemName}</h4>
+                                        </div>
+                                        <button
+                                            onClick={() => handleActionClick(item)}
+                                            className="px-3 py-1.5 bg-sky-500 text-white text-xs font-medium rounded hover:bg-sky-600 shadow-sm transition-colors flex items-center gap-1"
+                                        >
+                                            Action <ArrowRight size={12} />
+                                        </button>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-2 text-sm">
+                                        <div className="bg-slate-50 p-2 rounded">
+                                            <span className="block text-xs text-slate-400">Design By</span>
+                                            <span className="font-medium text-slate-700">{s3.designCreateBy}</span>
+                                        </div>
+                                        <div className="bg-slate-50 p-2 rounded truncate">
+                                            <span className="block text-xs text-slate-400">URL</span>
+                                            <a href={s3.urlOfDesign} target="_blank" rel="noopener noreferrer" className="text-sky-600 hover:underline">View Link</a>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex justify-between items-center pt-2 border-t border-slate-100">
+                                        <span className="text-xs text-slate-500">Delay: {calculateDelay(item.requirementDate)} days</span>
+                                        <span className="text-xs text-slate-400">{item.requirementDate}</span>
+                                    </div>
+                                </div>
+                            );
+                        }}
                     />
                 </div>
             ) : (
@@ -122,6 +157,43 @@ const Stage4DesignUpdate = () => {
                                     <td className="px-4 py-3 text-sm text-slate-500">{s4.remarks}</td>
                                     <td className="px-4 py-3 text-xs text-slate-500">{calculateDelay(item.requirementDate)} days</td>
                                 </>
+                            );
+                        }}
+                        renderCard={(item) => {
+                            const s4 = getStage4Data(item);
+                            return (
+                                <div className="flex flex-col gap-3">
+                                    <div className="flex justify-between items-start">
+                                        <div>
+                                            <span className="text-xs font-bold text-sky-600 bg-sky-50 px-2 py-0.5 rounded border border-sky-100">{item.serialNo}</span>
+                                            <h4 className="font-bold text-slate-800 mt-1">{item.systemName}</h4>
+                                        </div>
+                                        <span className="text-xs text-slate-400">{item.requirementDate}</span>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-2 text-sm">
+                                        <div className="bg-slate-50 p-2 rounded">
+                                            <span className="block text-xs text-slate-400">Process</span>
+                                            <span className="font-medium text-slate-700">{item.processSystem}</span>
+                                        </div>
+                                        <div className="bg-slate-50 p-2 rounded">
+                                            <span className="block text-xs text-slate-400">Update From</span>
+                                            <span className="font-medium text-slate-700">{s4.takeUpdateFrom}</span>
+                                        </div>
+                                    </div>
+
+                                    {s4.remarks && (
+                                        <div className="text-sm text-slate-600 bg-slate-50 p-2 rounded border border-slate-100">
+                                            <span className="block text-xs text-slate-400 mb-1">Remarks</span>
+                                            {s4.remarks}
+                                        </div>
+                                    )}
+
+                                    <div className="flex justify-between items-center pt-2 border-t border-slate-100">
+                                        <span className="text-xs text-slate-500">Delay: {calculateDelay(item.requirementDate)} days</span>
+                                        <span className="text-xs text-slate-400">Completed</span>
+                                    </div>
+                                </div>
                             );
                         }}
                     />

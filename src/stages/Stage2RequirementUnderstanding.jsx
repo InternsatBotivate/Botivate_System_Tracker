@@ -112,6 +112,48 @@ const Stage2RequirementUnderstanding = () => {
                                 </>
                             );
                         }}
+                        renderCard={(item) => {
+                            const s1 = getStage1Data(item);
+                            return (
+                                <div className="flex flex-col gap-3">
+                                    <div className="flex justify-between items-start">
+                                        <div>
+                                            <span className="text-xs font-bold text-sky-600 bg-sky-50 px-2 py-0.5 rounded border border-sky-100">{item.serialNo}</span>
+                                            <h4 className="font-bold text-slate-800 mt-1">{item.systemName}</h4>
+                                        </div>
+                                        <button
+                                            onClick={() => handleActionClick(item)}
+                                            className="px-3 py-1.5 bg-sky-500 text-white text-xs font-medium rounded hover:bg-sky-600 shadow-sm transition-colors flex items-center gap-1"
+                                        >
+                                            Action <ArrowRight size={12} />
+                                        </button>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-2 text-sm">
+                                        <div className="bg-slate-50 p-2 rounded">
+                                            <span className="block text-xs text-slate-400">Process</span>
+                                            <span className="font-medium text-slate-700">{item.processSystem}</span>
+                                        </div>
+                                        <div className="bg-slate-50 p-2 rounded">
+                                            <span className="block text-xs text-slate-400">Posted By</span>
+                                            <span className="font-medium text-slate-700">{s1.postedBy}</span>
+                                        </div>
+                                    </div>
+
+                                    {item.reason && (
+                                        <div className="text-sm text-slate-600 bg-slate-50 p-2 rounded border border-slate-100">
+                                            <span className="block text-xs text-slate-400 mb-1">Reason</span>
+                                            {item.reason}
+                                        </div>
+                                    )}
+
+                                    <div className="flex justify-between items-center pt-2 border-t border-slate-100">
+                                        <span className="text-xs text-slate-500">Delay: {calculateDelay(item.requirementDate)} days</span>
+                                        <span className="text-xs text-slate-400">{item.requirementDate}</span>
+                                    </div>
+                                </div>
+                            );
+                        }}
                     />
                 </div>
             ) : (
@@ -136,6 +178,47 @@ const Stage2RequirementUnderstanding = () => {
                                 </>
                             );
                         }}
+                        renderCard={(item) => {
+                            const s2 = getStage2Data(item);
+                            return (
+                                <div className="flex flex-col gap-3">
+                                    <div className="flex justify-between items-start">
+                                        <div>
+                                            <span className="text-xs font-bold text-sky-600 bg-sky-50 px-2 py-0.5 rounded border border-sky-100">{item.serialNo}</span>
+                                            <h4 className="font-bold text-slate-800 mt-1">{item.systemName}</h4>
+                                        </div>
+                                        <span className="text-xs text-slate-400">{item.requirementDate}</span>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-2 text-sm">
+                                        <div className="bg-slate-50 p-2 rounded">
+                                            <span className="block text-xs text-slate-400">Process</span>
+                                            <span className="font-medium text-slate-700">{item.processSystem}</span>
+                                        </div>
+                                        <div className="bg-slate-50 p-2 rounded">
+                                            <span className="block text-xs text-slate-400">Und. By</span>
+                                            <span className="font-medium text-slate-700">{s2.requirementUnderstandingBy}</span>
+                                        </div>
+                                    </div>
+
+                                    {s2.remarks && (
+                                        <div className="text-sm text-slate-600 bg-slate-50 p-2 rounded border border-slate-100">
+                                            <span className="block text-xs text-slate-400 mb-1">Remarks</span>
+                                            {s2.remarks}
+                                        </div>
+                                    )}
+
+                                    <div className="flex justify-between items-center pt-2 border-t border-slate-100">
+                                        <span className="text-xs text-slate-500">Delay: {calculateDelay(item.requirementDate)} days</span>
+                                        {s2.uploadImage && (
+                                            <span className="flex items-center gap-1 text-xs text-sky-600">
+                                                <ImageIcon size={12} /> Image
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+                            );
+                        }}
                     />
                 </div>
             )}
@@ -146,7 +229,7 @@ const Stage2RequirementUnderstanding = () => {
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
             >
-                {selectedItem && (
+                {selectedItem ? (
                     <form onSubmit={handleSubmit} className="space-y-6">
                         {/* Read-only Context from Stage 1 */}
                         <div className="bg-slate-50 p-4 rounded-lg border border-slate-100 text-sm space-y-3">
@@ -211,7 +294,7 @@ const Stage2RequirementUnderstanding = () => {
                             </button>
                         </div>
                     </form>
-                )}
+                ) : <div />}
             </ReusableModal>
         </div>
     );
